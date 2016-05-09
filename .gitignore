@@ -1,2 +1,3 @@
 cloudstack.ini
 ssh.config
+*.retry
