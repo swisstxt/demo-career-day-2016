@@ -1,0 +1,13 @@
+[jump]
+jump-01.ma-cloud.local
+
+[k8s:children]
+k8s-masters
+k8s-minions
+
+[k8s-masters]
+master-01.ma-cloud.local
+
+[k8s-minions]
+minion-01.ma-cloud.local
+minion-02.ma-cloud.local

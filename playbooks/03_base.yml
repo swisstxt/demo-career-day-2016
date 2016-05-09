@@ -1,0 +1,24 @@
+---
+- hosts: all
+  remote_user: root
+  
+  tasks:
+  - name: make required packages are installed
+    package: 
+      name: "{{ item }}" 
+      state: installed
+    with_items:
+    - ntp
+  
+  - name: make sure ntp is running
+    service: 
+      name: ntpd 
+      enabled: yes
+      state: started
+      
+  - name: make sure firewalld is stopped
+    service: 
+      name: ntpd 
+      enabled: no
+      state: stopped
+      

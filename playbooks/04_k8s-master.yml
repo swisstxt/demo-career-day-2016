@@ -1,0 +1,45 @@
+---
+- hosts: k8s-masters
+  remote_user: root
+  
+  tasks:
+  - name: install required services
+    package: 
+      name: "{{ item }}"
+      state: installed
+    with_items: 
+    - etcd
+    - kubernetes
+
+  - name: configure etcd
+    copy:
+      src: files/k8s-master/etcd.conf
+      dest: /etc/etcd/etcd.conf
+      owner: root
+      group: root
+      mode: 0644
+  
+  - name: configure k8s apiserver
+    copy:
+      src: files/k8s-master/apiserver
+      dest: /etc/kubernetes/apiserver
+      owner: root
+      group: root
+      mode: 0644
+ 
+  - name: start requrired services
+    service: 
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+    - etcd 
+    - kube-apiserver 
+    - kube-controller-manager
+    - kube-scheduler
+
+  - name: configure flannel network
+    command: etcdctl mk /atomic.io/network/config '{"Network":"172.17.0.0/16"}'
+     
+
+

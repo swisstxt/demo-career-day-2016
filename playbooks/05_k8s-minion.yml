@@ -1,0 +1,53 @@
+---
+- hosts: all
+  remote_user: root
+  tasks: [ ]  
+
+- hosts: k8s-minions
+  remote_user: root
+  
+  tasks:
+  - name: get master node ips
+    set_fact: 
+      k8s_master: "{{ hostvars[item]['ansible_default_ipv4']['address'] }}"
+    with_items: "{{ groups['k8s-masters'] }}"
+
+  - name: install required services
+    package: 
+      name: "{{ item }}"
+      state: installed
+    with_items: 
+    - flannel
+    - kubernetes
+
+  - name: configure etcd server for flannel service
+    lineinfile: 
+      dest: /etc/sysconfig/flanneld
+      regexp: ^FLANNEL_ETCD= 
+      line: FLANNEL_ETCD="http://{{ k8s_master }}:2379"
+  
+  - name: configure kubernetes master in default config
+    lineinfile: 
+      dest: /etc/kubernetes/config
+      regexp: ^KUBE_MASTER= 
+      line: KUBE_MASTER="--master=http://{{ k8s_master }}:8080"
+
+  - name: configure kubelet service
+    template:
+      src: files/k8s-minion/kubelet.j2
+      dest: /etc/kubernetes/kubelet
+      owner: root
+      group: root
+      mode: 0644
+ 
+  - name: start requrired services
+    service: 
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+    - kube-proxy
+    - kubelet
+    - docker
+    - flanneld
+

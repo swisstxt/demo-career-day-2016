@@ -1,0 +1,32 @@
+---
+- hosts: k8s-masters
+  remote_user: root
+
+  tasks:
+  - name: create dir strcture
+    file:
+      name: "{{ item }}"
+      state: directory
+      owner: root
+      group: root
+      mode: 0644
+    with_items:
+    - /k8s/
+    - /k8s/hello-career-day-2016
+
+  - name: create pod/service file
+    copy: 
+      src: "files/k8s-service/{{ item }}.yaml"
+      dest: "/k8s/hello-career-day-2016/{{ item }}.yaml"
+      owner: root
+      group: root
+      mode: 0644
+    with_items:
+    - rc
+    - service
+
+  - name: run pod/service
+    command: kubectl create -f {{ item }}
+    with_items:
+    - /k8s/hello-career-day-2016/rc.yaml
+    - /k8s/hello-career-day-2016/service.yaml

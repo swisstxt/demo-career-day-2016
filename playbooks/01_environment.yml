@@ -1,0 +1,55 @@
+---
+- name: setup cloud environment
+  hosts: jump*
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: upload my ssh key to cloudstack
+    cs_sshkeypair:
+      name: "{{ lookup('env', 'USER') }}"
+      public_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+      project: "{{ cs_project }}"
+
+- name: install VMs in the cloud
+  hosts: all
+  connection: local
+  gather_facts: no
+  serial: 3
+  tasks:
+  - name: create VM instances
+    cs_instance:
+      name: "{{ inventory_hostname_short }}"
+      template: "{{ cs_template }}"
+      service_offering: "{{ cs_offering }}"
+      ssh_key: "{{ lookup('env', 'USER') }}"
+      zone: "{{ cs_zone }}"
+      project: "{{ cs_project }}"
+      networks: "{{ cs_networks }}"
+      #force: "{{ cs_force }}"
+    register: vm
+
+  - name: configure static NATs for public IPs
+    cs_staticnat:
+      ip_address: "{{ public_ip }}"
+      vm: "{{ inventory_hostname_short }}"
+      project: "{{ cs_project }}"
+      zone: "{{ cs_zone }}"
+    when: public_ip is defined
+
+  - name: open firewall ports
+    cs_firewall:
+      ip_address: "{{ public_ip }}"
+      start_port: "{{ item.start_port }}"
+      end_port: "{{ item.end_port }}"
+      protocol: "{{ item.protocol | default('tcp') }}"
+      cidr: "{{ item.cidr | default('0.0.0.0/0') }}"
+      project: "{{ cs_project }}"
+    with_items: "{{ cs_firewall_rules }}"
+    when: public_ip is defined
+
+- name: wait for jumphosts
+  hosts: jump
+  connection: local
+  tasks:
+  - name: wait for ssh to be ready
+    wait_for: host={{ public_ip }} port=22

@@ -1,0 +1,5 @@
+---
+public_ip: 185.27.109.24
+cs_firewall_rules:
+- { start_port: 22, end_port: 22, protocol: tcp, cidr: 193.218.100.0/22 }
+- { start_port: 22, end_port: 22, protocol: tcp, cidr: 193.218.104.0/24 }

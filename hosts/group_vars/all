@@ -1,0 +1,16 @@
+---
+cs_zone:
+cs_force: no
+cs_project:
+cs_offering: 2cpu_2gb
+cs_firewall_rules: []
+cs_template: CentOS-7-x86_64
+cs_networks:
+- Net
+
+networks:
+- domain: ma-cloud.local
+  jump_name: jump-01
+  jump_ip: 185.27.109.24
+
+

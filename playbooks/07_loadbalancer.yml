@@ -1,0 +1,48 @@
+---
+- name: configure load balancer
+  hosts: localhost
+  vars:
+    lp_ip: 185.27.109.37
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: app load balancer hello-world 
+    cs_loadbalancer_rule:
+      name: k8s_loadbalancer_hello-world
+      ip_address: "{{ lb_ip}}"
+      project: "{{ cs_project }}"
+      zone: "{{ cs_zone }}"
+      algorithm: roundrobin
+      public_port: 80
+      private_port: 30080
+ 
+  - name: open firewall ports
+    cs_firewall:
+      ip_address: "{{ lb_ip }}"
+      start_port: "{{ item }}"
+      end_port: "{{ item }}"
+      cidr: 0.0.0.0/0
+      project: "{{ cs_project }}"
+      zone: "{{ cs_zone }}"
+    with_items:
+    - 80
+
+- name: add minios to app load balancer
+  hosts: k8s-minions
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: 
+    cs_loadbalancer_rule_member: 
+      name: "{{ item }}"
+      vms: "{{ inventory_hostname_short }}"
+      project: "{{ cs_project }}"
+      zone: "{{ cs_zone }}"
+    with_items:
+    - k8s_loadbalancer_hello-world
+
+
+
+
