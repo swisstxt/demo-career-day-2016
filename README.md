@@ -19,18 +19,18 @@ __Kubernetes Minions:__ The minion nodes take orders from the master server and 
 
 __Jump Host:__ The jump host provides management access (ssh) to the cloud network from outside the cloud (eg. my laptop)
 
-__Public IP:__ Two public IPs are configured on the cloud router. `jump.stxt.demo` allows to access the jump host. `hello.stxt.demo` in 
+__Public IPs:__ Two public IPs are configured on the cloud router. `jump.stxt.demo` allows to access the jump host. `hello.stxt.demo` in 
 load balanced and allows us to access our demo application. 
 
 ## Technologies used
 
-### Ansible
+__[Ansible](https://www.ansible.com/)__ is a tool used to install and configure servers and services.
 
-### CloudStack
+__[CloudStack](https://cloudstack.apache.org/)__ is a selfhosted cloud solution, similar to public clouds such as AWS et al.
 
-### Docker
+__[Docker](https://www.docker.com/)__ provides a software infrastructure that allow to packago, deploy and run services in a convenient manner.
 
-### Kubernetes
+__[Kubernetes](http://kubernetes.io/)__ is an open-source system for automating deployment, operations, and scaling of containerized applications.
 
 ## Step by Step
 
