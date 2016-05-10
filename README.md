@@ -20,6 +20,13 @@ This project is ment to illustrate how we work at SWISS TXT. It shows a basic st
 
 ### Setup the Environment
 
+```
+# execute step:
+ansible-playbook playbooks/01_environment.yml
+```
+
+[![](https://raw.githubusercontent.com/swisstxt/demo-career-day-2016/master/doc/02_cs_instances.png)
+
 ### Configure the Jump Host
 
 ### Configure the Kubernetes Master

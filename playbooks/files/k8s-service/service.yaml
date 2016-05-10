@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-career-day-biel-2016
+  name: hcdb-2016
 spec:
   type: NodePort
   ports:
