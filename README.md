@@ -36,16 +36,17 @@ __[Kubernetes](http://kubernetes.io/)__ is an open-source system for automating 
 
 ### Setup the Environment
 
+In the first step we are going to setup the virtual machines/cloud instances and deploys our ssh key. This enables us to access 
+our instances via ssh without password. It also configures a public IP to perform static NAT to the jump host. This allows 
+us to ssh on the jump host via public IP from outside the cloud.
+
+All of those steps are performed by ansible via API calls to the cloud API and are executed local... No ssh to the 
+machines is required at this stage.
+
 ```
 # execute step:
 ansible-playbook playbooks/01_environment.yml
 ```
-
-In the first step we are going to setup the virtual machines/cloud instances. It also configures a public IP 
-to perform static NAT to the jump host. This allows us to ssh on the jump host via public IP from outside the cloud.
-
-All of those steps are performed by ansible via API calls to the cloud API and are executed local... No ssh to the 
-machines is required at this stage.
 
 The step can be verified via cloud web interface:
 
@@ -53,7 +54,21 @@ The step can be verified via cloud web interface:
 
 ### Configure the Jump Host
 
+This step only reads the inventory files and generates a local ssh configuration that allows us to access all machines in the 
+cloud via ssh via the jump host. 
+
+```
+# execute step:
+ansible-playbook playbooks/02_jumphost_sshconfig.yml
+
+# test: 
+ssh -F ssh.config master-01.ma-cloud.local
+
+```
+
 ### Configure the Kubernetes Master
+
+Next we prepare the master node according to the documentation: 
 
 ### Configure the Kubernetes Minions
 
