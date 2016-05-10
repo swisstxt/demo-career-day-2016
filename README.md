@@ -2,7 +2,10 @@
 
 ## Description
 
-This project is ment to illustrate how we work at SWISS TXT. It shows a basic step by step setup of a kubernetes installation (as used for a quick proof of concept) upon our cloud using ansible as well as a deployment of a simple web app on the kubernetes cluster itself. It basically implements the instructions given at [this guide](http://severalnines.com/blog/installing-kubernetes-cluster-minions-centos7-manage-pods-services).
+This project is ment to illustrate how we work at SWISS TXT. It shows a basic step by step setup 
+of a kubernetes installation (as used for a quick proof of concept) upon our cloud using ansible 
+as well as a deployment of a simple web app on the kubernetes cluster itself. It basically implements 
+the instructions given at [this guide](http://severalnines.com/blog/installing-kubernetes-cluster-minions-centos7-manage-pods-services).
 
 ## Architecture
 
@@ -25,7 +28,15 @@ This project is ment to illustrate how we work at SWISS TXT. It shows a basic st
 ansible-playbook playbooks/01_environment.yml
 ```
 
-[![](https://raw.githubusercontent.com/swisstxt/demo-career-day-2016/master/doc/02_cs_instances.png)
+In the first step we are going to setup the virtual machines/cloud instances. It also configures a public IP 
+to perform static NAT to the jump host. This allows us to ssh on the jump host via public IP from outside the cloud.
+
+All of those steps are performed by ansible via API calls to the cloud API and are executed local... No ssh to the 
+machines is required at this stage.
+
+The step can be verified via cloud web interface:
+
+![](https://raw.githubusercontent.com/swisstxt/demo-career-day-2016/master/doc/02_cs_instances.png)
 
 ### Configure the Jump Host
 
