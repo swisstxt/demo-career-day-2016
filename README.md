@@ -62,7 +62,7 @@ cloud via ssh via the jump host.
 ansible-playbook playbooks/02_jumphost_sshconfig.yml
 
 # test: 
-ssh -F ssh.config master-01.ma-cloud.local
+ssh -F ssh.config root@master-01.ma-cloud.local
 
 ```
 
@@ -81,7 +81,7 @@ Next we prepare the master node according to the documentation:
 ansible-playbook playbooks/03_k8s-master.yml
 
 # test: 
-ssh -F ssh.config master-01.ma-cloud.local "kubectl get nodes"
+ssh -F ssh.config root@master-01.ma-cloud.local "kubectl get nodes"
 ```
 
 ### Configure the Kubernetes Minions
@@ -98,7 +98,7 @@ Similar to the last steps, the minion nodes will be prepared:
 ansible-playbook playbooks/04_k8s-minion.yml
 
 # test: 
-ssh -F ssh.config master-01.ma-cloud.local "kubectl get nodes"
+ssh -F ssh.config root@master-01.ma-cloud.local "kubectl get nodes"
 ```
 
 ### Deploy at Example Service
@@ -111,8 +111,8 @@ container to the outside world of kubernetes) will be deployed via master to the
 ansible-playbook playbooks/05_k8s-service.yml
 
 # test: 
-ssh -F ssh.config master-01.ma-cloud.local "kubectl get rc"
-ssh -F ssh.config master-01.ma-cloud.local "kubectl get services"
+ssh -F ssh.config root@master-01.ma-cloud.local "kubectl get rc"
+ssh -F ssh.config root@master-01.ma-cloud.local "kubectl get services"
 ```
 
 ### Configure the load balancer
