@@ -1,3 +1,4 @@
 cloudstack.ini
 ssh.config
 *.retry
+*.swp
