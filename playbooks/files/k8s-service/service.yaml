@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world
+  name: hello-career-day-biel-2016
 spec:
   type: NodePort
   ports:
@@ -9,4 +9,4 @@ spec:
     protocol: TCP
     nodePort: 30080
   selector:
-    name: hello-world
+    name: hello-career-day-biel-2016

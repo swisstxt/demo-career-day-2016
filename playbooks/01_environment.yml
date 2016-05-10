@@ -14,7 +14,6 @@
   hosts: all
   connection: local
   gather_facts: no
-  serial: 3
   tasks:
   - name: create VM instances
     cs_instance:
@@ -25,7 +24,6 @@
       zone: "{{ cs_zone }}"
       project: "{{ cs_project }}"
       networks: "{{ cs_networks }}"
-      #force: "{{ cs_force }}"
     register: vm
 
   - name: configure static NATs for public IPs

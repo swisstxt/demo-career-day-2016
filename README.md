@@ -1,12 +1,36 @@
-# Ansible Cloud Project [name]
+# Career Day Biel/Bienne Demo 2016
 
 ## Description
-...
 
-## Keep this project in sync with the boilerplate
+This project is ment to illustrate how we work at SWISS TXT. It shows a basic step by step setup of a kubernetes installation (as used for a quick proof of concept) upon our cloud using ansible as well as a deployment of a simple web app on the kubernetes cluster itself. It basically implements the instructions given at [this guide](http://severalnines.com/blog/installing-kubernetes-cluster-minions-centos7-manage-pods-services).
 
-Since this project is based on the [ansible-cloud-project-boilerplate](https://github.com/swisstxt/ansible-cloud-project-boilerplate)
-it is recommended to update the boilerplated files from time to time. To do so...
+## Architecture
 
-1. ... keep in mind not to edit the files that are provided by the boilerplate.
-2. ... run `./boilerplate sync`. This will update the boilerplate files as well as update all git submodules.
+## Technologies used
+
+### Ansible
+
+### CloudStack
+
+### Docker
+
+### Kubernetes
+
+## Step by Step
+
+### Setup the Environment
+
+### Configure the Jump Host
+
+### Configure the Kubernetes Master
+
+### Configure the Kubernetes Minions
+
+### Deploy at Example Service
+
+## It does not end here...
+
+There is always room for improvment! The following steps would help to make our setup a bit more handable, versitile and accessable:
+
+* Move product focused tasks and configuration in ansible roles (eg. role `etcd`, role `kubernetes`, role `hello-career-day-biel-2016`, ...)
+
