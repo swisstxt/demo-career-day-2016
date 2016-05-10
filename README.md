@@ -9,6 +9,19 @@ the instructions given at [this guide](http://severalnines.com/blog/installing-k
 
 ## Architecture
 
+![](https://raw.githubusercontent.com/swisstxt/demo-career-day-2016/master/doc/01_arch.png)
+
+In our cloud environment we set up the following components:
+
+__Kubernetes Master:__ The master node provides on tho API and management services (`scheduler`, `etcd`) for Kubernetes
+
+__Kubernetes Minions:__ The minion nodes take orders from the master server and run the containers (services) on a local docker installation
+
+__Jump Host:__ The jump host provides management access (ssh) to the cloud network from outside the cloud (eg. my laptop)
+
+__Public IP:__ Two public IPs are configured on the cloud router. `jump.stxt.demo` allows to access the jump host. `hello.stxt.demo` in 
+load balanced and allows us to access our demo application. 
+
 ## Technologies used
 
 ### Ansible
