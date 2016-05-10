@@ -70,13 +70,77 @@ ssh -F ssh.config master-01.ma-cloud.local
 
 Next we prepare the master node according to the documentation: 
 
+* `etcd` and `kubernetes` will be installed
+* `etcd` will be configured
+* the kubernetes API server will be configured
+* all required services will be started
+* the virtual network for docker will be configured
+
+```
+# execute step:
+ansible-playbook playbooks/03_k8s-master.yml
+
+# test: 
+ssh -F ssh.config master-01.ma-cloud.local "kubectl get nodes"
+```
+
 ### Configure the Kubernetes Minions
 
+Similar to the last steps, the minion nodes will be prepared: 
+
+* `flannel` and `kubernetes` will be installed
+* `flannel` will be configured
+* `kubelet` sevices will be configured
+* all required services will be started
+
+```
+# execute step:
+ansible-playbook playbooks/04_k8s-minion.yml
+
+# test: 
+ssh -F ssh.config master-01.ma-cloud.local "kubectl get nodes"
+```
+
 ### Deploy at Example Service
+
+In this step, a kubernetes pod (a single container or a group of containers) as well its service (a presentation of the 
+container to the outside world of kubernetes) will be deployed via master to the minions.
+
+```
+# execute step:
+ansible-playbook playbooks/05_k8s-service.yml
+
+# test: 
+ssh -F ssh.config master-01.ma-cloud.local "kubectl get rc"
+ssh -F ssh.config master-01.ma-cloud.local "kubectl get services"
+```
+
+### Configure the load balancer
+
+In this step, a kubernetes pod (a single container or a group of containers) as well its service (a presentation of the 
+container to the outside world of kubernetes) will be deployed via master to the minions.
+
+```
+# execute step:
+ansible-playbook playbooks/05_k8s-service.yml
+```
+
+To test just point a browser at http://hello.stxt.demo (host entry needs to be configured)
+
+## Achievements
+
+We now have... 
+
+* A working kubernetes environment
+* An automated and reproducable installation
+* Documentation for free
 
 ## It does not end here...
 
 There is always room for improvment! The following steps would help to make our setup a bit more handable, versitile and accessable:
 
 * Move product focused tasks and configuration in ansible roles (eg. role `etcd`, role `kubernetes`, role `hello-career-day-biel-2016`, ...)
+* Make the master services (`etcd`, `apiservice`, ...) redundant
+* The service can be deployed in much nicer ways (look at http://docs.ansible.com/ansible/kubernetes_module.html for example)
+* ... 
 
