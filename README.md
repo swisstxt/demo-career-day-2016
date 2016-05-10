@@ -19,7 +19,7 @@ __Kubernetes Minions:__ The minion nodes take orders from the master server and 
 
 __Jump Host:__ The jump host provides management access (ssh) to the cloud network from outside the cloud (eg. my laptop)
 
-__Public IPs:__ Two public IPs are configured on the cloud router. `jump.stxt.demo` allows to access the jump host. `hello.stxt.demo` in 
+__Public IPs:__ Two public IPs are configured on the cloud router. `jump.stxt.demo` allows to access the jump host. `hello.stxt.demo` is 
 load balanced and allows us to access our demo application. 
 
 ## Technologies used
@@ -38,7 +38,7 @@ __[Kubernetes](http://kubernetes.io/)__ is an open-source system for automating 
 
 In the first step we are going to setup the virtual machines/cloud instances and deploys our ssh key. This enables us to access 
 our instances via ssh without password. It also configures a public IP to perform static NAT to the jump host. This allows 
-us to ssh on the jump host via public IP from outside the cloud.
+us to ssh to the jump host via public IP from outside the cloud.
 
 All of those steps are performed by ansible via API calls to the cloud API and are executed local... No ssh to the 
 machines is required at this stage.
